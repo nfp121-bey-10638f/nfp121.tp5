@@ -63,6 +63,10 @@ public class JPanelListe extends JPanel implements ActionListener, ItemListener 
         add(texte, "Center");
 
         boutonRechercher.addActionListener(this);
+        ordreCroissant.addItemListener(this);
+        ordreDecroissant.addItemListener(this);
+        boutonOccurrences.addActionListener(this);
+        boutonRetirer.addActionListener(this);
         // à compléter;
 
     }
@@ -94,19 +98,30 @@ public class JPanelListe extends JPanel implements ActionListener, ItemListener 
     }
 
     public void itemStateChanged(ItemEvent ie) {
-        if (ie.getSource() == ordreCroissant)
-            ;// à compléter
-        else if (ie.getSource() == ordreDecroissant)
-            ;// à compléter
-
+        if (ie.getSource() == ordreCroissant){
+            Collections.sort(liste);
+            texte.setText(liste.toString());
+        }
+        else if (ie.getSource() == ordreDecroissant){
+            Collections.sort(liste, Collections.reverseOrder());
+            texte.setText(liste.toString());
+        }
         texte.setText(liste.toString());
     }
 
     private boolean retirerDeLaListeTousLesElementsCommencantPar(String prefixe) {
         boolean resultat = false;
-        // à compléter
-        // à compléter
-        // à compléter
+        Iterator<String> i = liste.iterator();
+        while(i.hasNext())
+        {
+           String str = i.next();          
+           if(str.startsWith(prefixe))
+           {
+               i.remove();
+               resultat = true;
+            }   
+        }
+        occurrences = Chapitre2CoreJava2.occurrencesDesMots(liste);
         return resultat;
     }
 
